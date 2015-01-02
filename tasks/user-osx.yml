@@ -1,0 +1,51 @@
+---
+
+- name: OSX - Create ansible group
+  osx_group:
+    name: '{{ item.name | default(ansible_bootstrap_group_name) }}'
+    gid: '{{ item.gid | default(ansible_bootstrap_ansible_gid) }}'
+    state: '{{ item.state | default("present") }}'
+    system: '{{ item.system | default(True) }}'
+  with_items: ansible_bootstrap_group
+
+- name: OSX - Create ansible user
+  osx_user:
+    name: '{{ item.name | default(ansible_bootstrap_user_name) }}'
+    comment: '{{ item.comment | default("Ansible configuration agent") }}'
+    home: '{{ item.home | default(ansible_bootstrap_home_directory) }}'
+    shell: '{{ item.shell | default("/bin/bash") }}'
+    password: '{{ item.password | default("*") }}'
+    uid: '{{ item.uid | default(ansible_bootstrap_ansible_uid) }}'
+    group: '{{ item.group | default(ansible_bootstrap_group_name) }}'
+    groups: '{{ item.groups | default("admin") }}'
+    state: '{{ item.state | default("present") }}'
+    update_password: '{{ item.update_password | default("on_create") }}'
+    force: '{{ item.force | default(True) }}'
+    system: '{{ item.system | default(True) }}'
+    createhome: '{{ item.createhome | default(True) }}'
+  with_items: ansible_bootstrap_user
+
+- name: OSX - Change ansible home directory perms
+  file:
+    path:  '{{ansible_bootstrap_home_directory}}'
+    owner: '{{ ansible_bootstrap_user_name }}'
+    group: '{{ ansible_bootstrap_group_name }}'
+    state: directory
+    mode: '0700'
+  
+- name: OSX - Create ansible user .ssh directory
+  file:
+    path:  '{{ansible_bootstrap_home_directory}}/.ssh'
+    owner: '{{ ansible_bootstrap_user_name }}'
+    group: '{{ ansible_bootstrap_group_name }}'
+    mode: '0700'
+    state: directory
+
+- name: OSX - Copy ansible ssh public key
+  authorized_key:
+    user: '{{ansible_bootstrap_user_name}}'
+    key: '{{lookup("file", custom_secret + "/../../ssh/ansible.pub")}}'
+    manage_dir: no
+
+  
+- include: sudo_single.yml

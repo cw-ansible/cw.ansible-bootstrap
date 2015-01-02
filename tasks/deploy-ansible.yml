@@ -1,0 +1,24 @@
+---
+
+
+- name: install packages
+  apt:
+    pkg: '{{ item }}'
+    update_cache: yes
+    cache_valid_time: 3600
+    install_recommends: no
+  with_items:
+    - git
+    - python-yaml
+    - python-jinja2
+
+- name: clone ansible git source
+  git:
+    repo: '{{ ansible_bootstrap_git_url }}'
+    dest: '{{ ansible_bootstrap_git_target}}'
+    accept_hostkey: True
+    update: no
+  sudo_user: ansible
+  when:
+    ansible_bootstrap_git_target is defined and
+    ansible_bootstrap_git_url is defined

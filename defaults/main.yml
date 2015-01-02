@@ -1,0 +1,64 @@
+---
+
+## Name of ansible user on remote host.
+# This is mainly a convenience placeholder.
+ansible_bootstrap_user_name: ansible
+
+
+## Name of ansible default group name.
+# This is mainly a convenience placeholder. 
+ansible_bootstrap_group_name: ansible
+
+## Path of ansible user home directory.
+# This is mainly a convenience placeholder.
+ansible_bootstrap_home_directory: '/var/lib/{{ ansible_bootstrap_user_name }}'
+
+
+## Both ansible UID/GID.
+# This is mainly a convenience placeholder.
+# Note: these are required and used only on Darwin systems.
+ansible_bootstrap_ansible_uid: 451
+ansible_bootstrap_ansible_gid: 451
+
+
+## An array of ansible "user" module compatible dictionary. Defaulted to:
+#
+#   name: {{ ansible_bootstrap_user_name }}
+#   comment: "Ansible configuration agent"
+#   home: {{ ansible_bootstrap_home_directory }}
+#   shell: "/bin/bash"
+#   password: "*"
+#   uid: {{ ansible_bootstrap_ansible_uid }}   # Darwin only
+#   group: {{ ansible_bootstrap_group_name }}  # Darwin only
+#   groups: "admin"                            # Darwin only
+#   state: "present"
+#   update_password: on_create                 # Darwin only
+#   force: yes                                 # Darwin only
+#   system: yes
+#   createhome: yes
+ansible_bootstrap_user:
+  - name: '{{ ansible_bootstrap_user_name }}'
+    groups: com.apple.access_ssh
+    #state: absent
+
+## An array of ansible "group" module compatible dictionary. Defaulted to:
+#   name: {{ ansible_bootstrap_group_name) }}
+#   gid: {{ ansible_bootstrap_ansible_gid) }}
+#   state: present
+#   system: yes
+#
+# Note: only used on Darwin systems
+ansible_bootstrap_group:
+  - name: '{{ ansible_bootstrap_group_name }}'
+    #state: absent
+
+## From where do we need to fetch ansible sources?
+ansible_bootstrap_git_url: 'https://github.com/ansible/ansible.git'
+
+## Where do we store ansible sources file?
+# note this directory MUST be writable for ansible user.
+ansible_bootstrap_git_target: '{{ ansible_bootstrap_home_directory }}/ansible'
+
+## If defined the ansible source will be checked out from
+#  ansible_bootstrap_git_target.
+#ansible_bootstrap_deploy_ansible: no

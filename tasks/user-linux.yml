@@ -1,0 +1,36 @@
+---
+
+- name: Linux - create ansible user
+  user:
+    name: '{{ item.name | default(ansible_bootstrap_user_name) }}'
+    comment: '{{ item.comment | default("Ansible configuration agent") }}'
+    system: '{{ item.system | default(True) }}'
+    home: '{{ item.home | default(ansible_bootstrap_home_directory) }}'
+    #group: '{{ item.name | default(ansible_bootstrap_user_name) }}'
+    #groups: '{{ item.groups | default(None) }}'
+    state: '{{ item.state | default("present") }}'
+    createhome: '{{ item.createhome | default(True) }}'
+  with_items: ansible_bootstrap_user
+
+
+- name: Linux - make sure .ansible/tmp exists in ansible home
+  file:
+    path='{{ansible_bootstrap_home_directory}}/{{item.path}}'
+    mode='{{ item.mode|default("0700") }}'
+    owner='{{ansible_bootstrap_user_name}}'
+    group='{{ansible_bootstrap_user_name}}'
+    state=directory
+  with_items:
+    - { path: .ssh }
+    - { path: .ansible }
+    - { path: .ansible/tmp }
+
+  
+- name: Linux - Copy ansible ssh public key
+  authorized_key:
+    user: '{{ansible_bootstrap_user_name}}'
+    key: '{{lookup("file", custom_secret + "/../../ssh/ansible.pub")}}'
+    manage_dir: no
+
+- include: sudo.yml
+- include: packages-apt.yml

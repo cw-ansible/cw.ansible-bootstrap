@@ -1,0 +1,8 @@
+---
+
+- name: install required packages
+  apt: pkg={{item}} update_cache=yes install_recommends=no
+  with_items:
+    - python-apt
+    - sudo
+    - lsb-release

@@ -1,0 +1,16 @@
+- name: add ansible to sudoers
+  template:
+    dest=/etc/sudoers.d/{{ansible_bootstrap_user_name}}
+    src=etc/sudoers.d/{{ansible_bootstrap_user_name}}
+    owner=root
+    group=root
+    mode=0440
+    validate='visudo -cf %s'
+
+- name: add /etc/sudoers.d include
+  lineinfile:
+    dest="/etc/sudoers"
+    mode=0440
+    validate='visudo -cf %s'
+    line='#includedir /etc/sudoers.d'
+    insertafter=EOF

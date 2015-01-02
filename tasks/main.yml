@@ -1,0 +1,13 @@
+---
+
+
+- include: user-osx.yml
+  when: ansible_system == 'Darwin'
+
+- include: user-linux.yml
+  when: ansible_system == 'Linux'
+
+- include: deploy-ansible.yml
+  when:
+    ansible_bootstrap_deploy_ansible is defined
+    and ansible_bootstrap_deploy_ansible

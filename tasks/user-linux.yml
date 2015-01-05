@@ -24,13 +24,6 @@
     - { path: .ssh }
     - { path: .ansible }
     - { path: .ansible/tmp }
-
   
-- name: Linux - Copy ansible ssh public key
-  authorized_key:
-    user: '{{ansible_bootstrap_user_name}}'
-    key: '{{lookup("file", custom_secret + "/../../ssh/ansible.pub")}}'
-    manage_dir: no
-
 - include: sudo.yml
 - include: packages-apt.yml

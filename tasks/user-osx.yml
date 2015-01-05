@@ -40,12 +40,5 @@
     group: '{{ ansible_bootstrap_group_name }}'
     mode: '0700'
     state: directory
-
-- name: OSX - Copy ansible ssh public key
-  authorized_key:
-    user: '{{ansible_bootstrap_user_name}}'
-    key: '{{lookup("file", custom_secret + "/../../ssh/ansible.pub")}}'
-    manage_dir: no
-
   
 - include: sudo_single.yml

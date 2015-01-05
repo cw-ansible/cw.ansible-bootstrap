@@ -41,6 +41,16 @@ ansible_bootstrap_user:
     groups: com.apple.access_ssh
     #state: absent
 
+## Ansible public ssh key
+#
+# This is required if you want passwordless ansible logins. Trust me this is
+# what you need. This variable is intentionally left blank since it is
+# specific to your environment.
+#
+# You can add the raw ssh public key or load it from a file.
+#
+# ansible_bootstrap_ssh_key: '{{ lookup("file", "path/to/ansible/id_rsa.pub")}}'
+
 ## An array of ansible "group" module compatible dictionary. Defaulted to:
 #   name: {{ ansible_bootstrap_group_name) }}
 #   gid: {{ ansible_bootstrap_ansible_gid) }}

@@ -12,13 +12,19 @@
     - python-yaml
     - python-jinja2
 
-- name: clone ansible git source
+- name: clone cw-ansible git sources
   git:
-    repo: '{{ ansible_bootstrap_git_url }}'
-    dest: '{{ ansible_bootstrap_git_target}}'
-    accept_hostkey: True
-    update: no
+    repo: '{{ item.repo }}'
+    dest: '{{ item.dest }}'
+    clone: '{{ item.clone | default(True) }}'
+    version: '{{ item.version | default("HEAD") }}'
+  when: ansible_bootstrap_cw_repository is defined
+  with_items: ansible_bootstrap_cw_repository
   sudo_user: ansible
-  when:
-    ansible_bootstrap_git_target is defined and
-    ansible_bootstrap_git_url is defined
+
+- name: bootstrap cw-ansible
+  command:
+    ./scripts/bootstrap-linux
+  args:
+    chdir: '{{ ansible_bootstrap_home_directory }}/cw-ansible'
+    creates: '{{ ansible_bootstrap_home_directory }}/cw-ansible/playbooks/inventory.example'

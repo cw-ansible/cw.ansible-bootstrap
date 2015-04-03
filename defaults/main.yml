@@ -62,13 +62,14 @@ ansible_bootstrap_group:
   - name: '{{ ansible_bootstrap_group_name }}'
     #state: absent
 
-## From where do we need to fetch ansible sources?
-ansible_bootstrap_git_url: 'https://github.com/ansible/ansible.git'
-
-## Where do we store ansible sources file?
-# note this directory MUST be writable for ansible user.
-ansible_bootstrap_git_target: '{{ ansible_bootstrap_home_directory }}/ansible'
-
 ## If defined the ansible source will be checked out from
 #  ansible_bootstrap_git_target.
 #ansible_bootstrap_deploy_ansible: no
+
+## List of repository to deploy for cw-ansible.
+#
+# Once cw-ansible is cloned, the "scripts/bootstrap-linux" command will be
+# run to bootstrap the full (cw-)ansible infrastructure.
+ansible_bootstrap_cw_repository:
+  - repo: 'https://github.com/cw-ansible/cw-ansible.git'
+    dest: '{{ ansible_bootstrap_home_directory }}/cw-ansible'

@@ -25,5 +25,5 @@
     - { path: .ansible }
     - { path: .ansible/tmp }
   
-- include: sudo.yml
 - include: packages-apt.yml
+- include: sudo.yml

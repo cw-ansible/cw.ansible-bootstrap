@@ -6,15 +6,7 @@ lang: american
 -->
 
 [![Build Status](https://travis-ci.org/cw-ansible/cw.ansible-bootstrap.svg?branch=master)](https://travis-ci.org/cw-ansible/cw.ansible-bootstrap)
-
-
-![Tweet this](http://img.shields.io/badge/Tweet-it-00aced.svg)
-
-[![Tweet this](http://img.shields.io/badge/Tweet-it-00aced.svg)](https://twitter.com/intent/tweet?tw_p=tweetbutton&via=renard_0&url=https%3A%2F%2Fgithub.com%2Fcw-ansible%2Fcw.ansible-bootstrap&text=Create%20an%20%23ansible%20user%20and%20configure%20its%20credentials)
-
-![Follow me on twitter](http://img.shields.io/badge/Twitter-Follow-00aced.svg)
-
-
+[![Tweet this](http://img.shields.io/badge/_-Tweet-00aced.svg)](https://twitter.com/intent/tweet?tw_p=tweetbutton&via=renard_0&url=https%3A%2F%2Fgithub.com%2Fcw-ansible%2Fcw.ansible-bootstrap&text=Create%20an%20%23ansible%20user%20and%20configure%20its%20credentials)
 [![Follow me on twitter](http://img.shields.io/badge/Twitter-Follow-00aced.svg)](https://twitter.com/intent/follow?region=follow_link&screen_name=renard_0&tw_p=followbutton)
 
 

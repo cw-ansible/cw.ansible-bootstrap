@@ -7,6 +7,9 @@
 - include: user-linux.yml
   when: ansible_system == 'Linux'
 
+- include: user-openbsd.yml
+  when: ansible_system == 'OpenBSD'
+  
 - name: Copy ansible ssh public key
   authorized_key:
     user: '{{ansible_bootstrap_user_name}}'

@@ -11,13 +11,14 @@
     validate: visudo -cf '%s'
   when: ansible_os_family in [ 'Darwin' ]
 
+# On OpenBSD Ansible user is not prefixed with an underscore
 - name: Add ansible to sudoers (single file style)
   lineinfile:
     dest: '/etc/sudoers'
     mode: 0440
-    regexp: '^_{{ansible_bootstrap_user_name}}.*NOPASSWD:ALL$'
-    line: '_{{ansible_bootstrap_user_name}} ALL=(ALL) NOPASSWD:ALL'
+    regexp: '^{{ansible_bootstrap_user_name}}.*NOPASSWD:ALL$'
+    line: '{{ansible_bootstrap_user_name}} ALL=(ALL) NOPASSWD:ALL'
     insertafter: EOF
     validate: visudo -cf '%s'
-  when: ansible_os_family not in [ 'Darwin' ]
+  when: ansible_os_family in [ 'OpenBSD' ]
   

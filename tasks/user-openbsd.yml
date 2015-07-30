@@ -25,13 +25,22 @@
 
 ---
 
+- name: OpenBSD - Create ansible group
+  group:
+    name: '{{ item.name | default(ansible_bootstrap_group_name) }}'
+    gid: '{{ item.gid | default(ansible_bootstrap_ansible_gid) }}'
+    state: '{{ item.state | default("present") }}'
+    system: '{{ item.system | default(True) }}'
+  with_items: ansible_bootstrap_group
+
+  
 - name: OpenBSD - create ansible user
   user:
     name: '{{ item.name | default(ansible_bootstrap_user_name) }}'
     comment: '{{ item.comment | default("Ansible configuration agent") }}'
     system: '{{ item.system | default(True) }}'
     home: '{{ item.home | default(ansible_bootstrap_home_directory) }}'
-    #group: '{{ item.name | default(ansible_bootstrap_user_name) }}'
+    group: '{{ item.name | default(ansible_bootstrap_user_name) }}'
     #groups: '{{ item.groups | default(None) }}'
     uid: '{{ item.uid | default(ansible_bootstrap_ansible_uid) }}'
     state: '{{ item.state | default("present") }}'

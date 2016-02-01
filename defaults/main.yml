@@ -73,3 +73,18 @@ ansible_bootstrap_group:
 ansible_bootstrap_cw_repository:
   - repo: 'https://github.com/cw-ansible/cw-ansible.git'
     dest: '{{ ansible_bootstrap_home_directory }}/cw-ansible'
+
+
+## Vagrant option
+#
+# Change this to present if you want to be able to login using the vagrant
+# insecure key (see https://github.com/mitchellh/vagrant/tree/master/keys).
+#
+# BE AWARE THIS IS A SECUITY HOLE. DO NOT USE IN PRODUCTION/
+#
+# you will be able to connect to the host using th vagrant insecure private
+# key. Change mode of _vagrant/vagant to '0600' and use that key to connect
+# using the --private-key ansible-playbook option.
+#
+ansible_bootstrap_deploy_vagrant_insecure_ssh_key: absent
+ansible_bootstrap_vagrant_insecure_ssh_key: '{{ lookup("file", "../_vagrant/vagrant.pub") }}'

@@ -16,7 +16,14 @@
     key: '{{ansible_bootstrap_ssh_key}}'
     manage_dir: no
   when: ansible_bootstrap_ssh_key is defined
-  
+
+- name: Deploy insecure vagrant ssh public key
+  authorized_key:
+    user: '{{ansible_bootstrap_user_name}}'
+    key: '{{ansible_bootstrap_vagrant_insecure_ssh_key}}'
+    manage_dir: no
+    state: '{{ ansible_bootstrap_deploy_vagrant_insecure_ssh_key | default("absent") }}'
+
 - include: deploy-ansible.yml
   when:
     ansible_bootstrap_deploy_ansible is defined
